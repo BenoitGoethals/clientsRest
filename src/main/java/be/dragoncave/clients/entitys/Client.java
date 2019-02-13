@@ -17,7 +17,9 @@ public class Client {
     private String forName;
     private Gender gender;
     private Date birthDate;
-    @OneToOne
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+
     private AddressClient address;
 
     private String phone;
@@ -30,9 +32,11 @@ public class Client {
 
     private String socialNbr;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER,
+    @OneToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "Client_Family")
+    @OrderBy("id")
     private Set<Client> family = new HashSet<>();
 
 
@@ -47,7 +51,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(String name, String forName, Gender gender, Date birthDate, AddressClient address, String phone, String gsm, Date dateInscription, boolean married, boolean disabled, String socialNbr, Set<Client> family, String clientNumber) {
+    public Client(String name, String forName, Gender gender, Date birthDate, AddressClient address, String phone, String gsm, Date dateInscription, boolean married, boolean disabled, String socialNbr, String clientNumber) {
         this.name = name;
         this.forName = forName;
         this.gender = gender;
@@ -59,7 +63,7 @@ public class Client {
         this.married = married;
         this.disabled = disabled;
         this.socialNbr = socialNbr;
-        this.family = family;
+
         this.clientNumber = clientNumber;
     }
 

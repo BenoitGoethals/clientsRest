@@ -7,17 +7,18 @@ import java.util.Objects;
 @Table(name = "addressClient")
 public class AddressClient {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     private String street;
     private String nbr;
     private String zip;
     private String country;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     public AddressClient(String street, String nbr, String zip, String country) {
         this.street = street;
