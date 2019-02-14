@@ -16,6 +16,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.Optional;
 
 import static org.junit.Assert.assertThat;
 
@@ -39,7 +40,46 @@ public class ClientsApplicationTests {
 
         Client save = clientRepository.save(client);
         Assert.assertNotNull(save.getId());
+
+        Optional<Client> cm = clientRepository.findById(save.getId());
+        Assert.assertEquals(save, cm.get());
     }
+
+    @Test
+    public void updateClientTest() {
+        //  Client(String name, String forName, Gender gender, Date birthDate, AddressClient address, String phone, String gsm, Date dateInscription, boolean married, boolean disabled, String socialNbr, Set<Client> family, String clientNumber) {
+        Client client = new Client("benoit", "goet", Gender.FEMALE, new Date(), new AddressClient(), "0475981572", "0475981572", new Date(), true, false, "689899", "98797987");
+        Client save = clientRepository.save(client);
+        Assert.assertNotNull(save.getId());
+        client.setName("test");
+        Client update = clientRepository.save(client);
+        Assert.assertEquals("test", update.getName());
+    }
+
+
+    @Test(expected = Exception.class)
+    public void deleteClientTest() {
+        //  Client(String name, String forName, Gender gender, Date birthDate, AddressClient address, String phone, String gsm, Date dateInscription, boolean married, boolean disabled, String socialNbr, Set<Client> family, String clientNumber) {
+        Client client = new Client("benoit", "goet", Gender.FEMALE, new Date(), new AddressClient(), "0475981572", "0475981572", new Date(), true, false, "689899", "98797987");
+
+        Client save = clientRepository.save(client);
+        Assert.assertNotNull(save.getId());
+        Long id = save.getId();
+        clientRepository.delete(client);
+        Assert.assertNull(clientRepository.getOne(id));
+
+    }
+
+
+    @Test
+    public void getClientNotFoungTest() {
+        //  Client(String name, String forName, Gender gender, Date birthDate, AddressClient address, String phone, String gsm, Date dateInscription, boolean married, boolean disabled, String socialNbr, Set<Client> family, String clientNumber) {
+        Client client = new Client("benoit", "goet", Gender.FEMALE, new Date(), new AddressClient(), "0475981572", "0475981572", new Date(), true, false, "689899", "98797987");
+
+        Client save = clientRepository.save(client);
+        Assert.assertNotNull(save.getId());
+    }
+
 
 
     @Test

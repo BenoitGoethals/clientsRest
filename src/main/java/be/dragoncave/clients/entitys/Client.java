@@ -67,6 +67,22 @@ public class Client {
         this.clientNumber = clientNumber;
     }
 
+    public void update(Client client) {
+        this.name = client.name;
+        this.forName = client.forName;
+        this.gender = client.gender;
+        this.birthDate = client.birthDate;
+        this.address = client.address;
+        this.phone = client.phone;
+        this.gsm = client.gsm;
+        this.dateInscription = client.dateInscription;
+        this.married = client.married;
+        this.disabled = client.disabled;
+        this.socialNbr = client.socialNbr;
+
+        this.clientNumber = client.clientNumber;
+    }
+
 
     public void addclient(Client client) throws ClientAllReadyExistsExeception {
         if (!this.family.add(client))
