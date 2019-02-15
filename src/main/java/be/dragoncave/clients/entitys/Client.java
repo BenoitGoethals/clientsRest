@@ -1,6 +1,10 @@
 package be.dragoncave.clients.entitys;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,22 +17,27 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "first name must not be empty")
     private String name;
+    @NotEmpty(message = "first name must not be empty")
     private String forName;
+    @NotNull
     private Gender gender;
+    @Past
     private Date birthDate;
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
-
+    @NotNull
     private AddressClient address;
 
     private String phone;
     private String gsm;
 
     private Date dateInscription;
-    private boolean married;
-
-    private boolean disabled;
+    @NotNull
+    private boolean married = false;
+    @NotNull
+    private boolean disabled = false;
 
     private String socialNbr;
 
@@ -45,7 +54,7 @@ public class Client {
             , fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client firstClient;
-
+    @NotEmpty(message = "first name must not be empty")
     private String clientNumber;
 
     public Client() {
